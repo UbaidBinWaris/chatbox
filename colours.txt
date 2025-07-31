@@ -1,0 +1,17 @@
+/* :root {
+  --colour-light-grey: #242628;
+  --colour-selected-light-grey: #3a3c3d;
+  --colour-darkgrey: #161618;
+  --colour-light-text: #f9f8f6;
+  /* --colour-primary: #161618; */
+  /* --colour-p: #11849b; */
+
+/*
+ @theme {
+      --colour-light-grey: '#242628',
+      --colour-selected-light-grey: '#3a3c3d',
+      --colour-darkgrey: '#161618',
+      --colour-light-text: '#f9f8f6',
+      --colour-primary: '#161618',
+} */
+ */
