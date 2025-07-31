@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 export default function DeepSearch({ onToggle, onDropdown }) {
@@ -14,7 +15,7 @@ export default function DeepSearch({ onToggle, onDropdown }) {
         className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 disabled:opacity-60 disabled:cursor-not-allowed 
         [&_svg]:shrink-0 select-none h-10 px-3.5 py-1.5 text-sm rounded-full group/ds-toggle transition-colors 
         duration-100 focus-visible:ring-transparent box-border relative overflow-hidden rounded-r-none pr-3 
-        bg-transparent hover:bg-button-ghost-hover focus-visible:bg-button-ghost-hover"
+        bg-[var(--dark-grey)] dark:bg-[var(--light)] dark:hover:bg-[var(--selected-light-grey)] hover:bg-[var(--light-grey)]"
       >
         <svg
           width="18"
@@ -22,7 +23,7 @@ export default function DeepSearch({ onToggle, onDropdown }) {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="stroke-[2] text-fg-secondary group-hover/ds-toggle:text-fg-primary"
+          className="stroke-[2] text-[var(--light)] dark:text-[var(--light-grey)] dark:group-hover/ds-toggle:text-[var(--light)] transition-colors duration-100"
         >
           <path
             d="M19.2987 8.84667C15.3929 1.86808 5.44409 5.76837 7.08971 11.9099C8.01826 15.3753 12.8142 14.8641 13.2764 12.8592C13.6241 11.3504 10.2964 12.3528 10.644 10.844C11.1063 8.839 15.9022 8.32774 16.8307 11.793C18.5527 18.2196 7.86594 22.4049 4.71987 15.2225"
@@ -36,12 +37,14 @@ export default function DeepSearch({ onToggle, onDropdown }) {
             className="transition-transform duration-200 ease-out origin-center rotate-0"
           />
         </svg>
-        <span className="hidden sm:block">DeepSearch</span>
+        <span className="hidden sm:block text-[var(--light)] dark:text-[var(--dark-gray)]
+
+">DeepSearch</span>
       </button>
 
       {/* Divider */}
       <div
-        className="h-4 w-[1px] bg-toggle-border focus:outline-none"
+        className="h-full py-1 w-[1px] bg-[var(--light-grey)] dark:bg-[var(--selected-light-grey)] focus:outline-none"
         tabIndex={-1}
       ></div>
 
@@ -57,7 +60,7 @@ export default function DeepSearch({ onToggle, onDropdown }) {
         className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 
         disabled:opacity-60 disabled:cursor-not-allowed [&_svg]:shrink-0 select-none h-10 px-3.5 py-1.5 text-sm 
         rounded-full transition-colors duration-100 relative overflow-hidden focus-visible:ring-transparent 
-        rounded-l-none pl-2 pr-3 bg-transparent hover:bg-button-ghost-hover focus-visible:bg-button-ghost-hover"
+        rounded-l-none pl-2 pr-3 bg-[var(--dark-grey)] dark:bg-[var(--light)] dark:hover:bg-[var(--selected-light-grey)] hover:bg-[var(--light-grey)]"
       >
         <svg
           width="12"
@@ -65,7 +68,7 @@ export default function DeepSearch({ onToggle, onDropdown }) {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="stroke-[2] text-fg-secondary"
+          className="stroke-[2] text-[var(--light)] dark:text-[var(--light-grey)] dark:hover:text-[var(--light)] transition-colors duration-100"
         >
           <path
             d="M6 9L12 15L18 9"
