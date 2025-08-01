@@ -11,7 +11,20 @@
   --selected-light-grey: #3a3c3d;
   --dark-grey: #161618;
   --light-text: #f9f8f6;
+
+
+
   --primary: #161618;
+  --secondary: #ffffff;
+  --text: #3a3c3d;
+  --hover: #3a3c3d;
+}
+
+.dark{
+  --primary : #ffffff;
+  --secondary: #161618; 
+  --text: #f9f8f6;
+  --hover: #9a9b9c;
 }
 
 html, body {

@@ -2,7 +2,7 @@
 import ChatInput from "./Components/ChatInput";
 import Sidebar from "./Components/Sidebar";
 import ThemeButton from "./Components/ThemeTogel";
-import Header  from "./Components/Header";
+import Header from "./Components/Header";
 
 export default function Home() {
   return (
@@ -11,21 +11,14 @@ export default function Home() {
       {/* <Sidebar /> */}
 
       <div className="absolute top-[50vh]">
+        <ThemeButton />
 
-      <ThemeButton />
-
-       <div className="bg-white text-black dark:bg-black dark:text-white">
-  This text and background change based on theme
-</div>
+        <div className="bg-[var(--primary)] text-[var(--secondary)] p-4 rounded-lg">
+          This changes with the theme!
+        </div>
       </div>
 
-
-     
-
-
-
-        <ChatInput />
-
+      <ChatInput />
     </main>
   );
 }
