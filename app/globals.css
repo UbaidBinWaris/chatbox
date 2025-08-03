@@ -17,14 +17,21 @@
   --primary: #161618;
   --secondary: #ffffff;
   --text: #3a3c3d;
-  --hover: #3a3c3d;
+  --hover: #b9c3c4;
+  --body:#f9f8f6;
+  --chatinput:#cbcfd3;
+
 }
 
 .dark{
+
+  --body:#161618;
   --primary : #ffffff;
   --secondary: #161618; 
   --text: #f9f8f6;
-  --hover: #9a9b9c;
+  --chatinput: #242628;
+
+  --hover: #3a3c3d;
 }
 
 html, body {

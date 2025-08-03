@@ -17,11 +17,11 @@ export default function ChatInput() {
   };
   return (
     <section
-      className={`fixed bottom-[4vh] left-0 w-full flex justify-center z-10 ${
+      className={`fixed bottom-[4vh] left-0 w-full flex justify-center z-10  ${
         showResponse ? "items-end" : "items-center"
       } `}
     >
-      <div className="ff flex-col border min-h-20 w-5xl p-5">
+      <div className="ff flex-col  min-h-20 w-5xl p-5 bg-[var(--chatinput)] rounded-3xl">
         <div className="ff">
           <input
             type="text"

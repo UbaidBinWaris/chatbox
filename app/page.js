@@ -6,7 +6,7 @@ import Header from "./Components/Header";
 
 export default function Home() {
   return (
-    <main className="min-h-screen text-black dark:bg-[var(--light-grey)]">
+    <main className="min-h-screen text-black dark:bg-[var(--body)]">
       <Header />
       {/* <Sidebar /> */}
 
