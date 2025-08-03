@@ -17,7 +17,7 @@ export default function Think({ size = 18 }) {
         isThinking ? "bg-[var(--hover)]" : ""
       } ${isThinking ? "text-[var(--primary)]" : ""}`}
     >
-      <div className="">
+      <div className="text-[var(--primary)]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill={isThinking ? "#FFD700" : "none"}
