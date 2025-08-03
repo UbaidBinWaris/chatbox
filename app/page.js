@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import ChatInput from "./Components/ChatInput";
 import Sidebar from "./Components/Sidebar";
 import ThemeButton from "./Components/ThemeTogel";

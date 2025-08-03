@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import { useState } from "react";
 import { messageText } from "../data/Message";
 import SoundVisualizerButton from "./ui/SoundVisualizerButton";
@@ -11,6 +11,7 @@ export default function ChatInput() {
   const [input, setInput] = useState("");
   const [userMessage, setUserMessage] = useState("");
   const [showResponse, setShowResponse] = useState(true);
+  const [search , setSearch] = useState("false");
 
   const handleAttach = () => {
     console.log("Attach button clicked");
@@ -38,7 +39,7 @@ export default function ChatInput() {
               onToggle={() => console.log("DeepSearch toggled")}
               onDropdown={() => console.log("Dropdown clicked")}
             />
-            <Think />
+            <Think onClick={() => console.log("Think button clicked")} />
           </div>
           <div className="ff gap-2">
             <AiSelector
@@ -47,7 +48,10 @@ export default function ChatInput() {
                 // Handle AI selection logic here
               }}
             />
-            <SoundVisualizerButton />
+            <SoundVisualizerButton onClick={() => {
+              setSearch(prev => !prev);
+              console.log(`Sound Visualizer Button Clicked ${search}`);
+            }} />
           </div>
         </div>
       </div>
