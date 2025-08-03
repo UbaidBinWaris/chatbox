@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
 
-export default function Think({ size = 18 }) {
+export default function Think({ size = 18, ThinkClick }) {
   const [isThinking, setIsThinking] = useState(false);
 
   const handleClick = () => {
-    setIsThinking((prev) => !prev);
+    const newState = !isThinking;
+    setIsThinking(newState);
+    if (ThinkClick) ThinkClick(newState); // Send the new state to parent
   };
 
   return (
@@ -13,9 +15,11 @@ export default function Think({ size = 18 }) {
       type="button"
       aria-label="Think"
       onClick={handleClick}
-      className={`ff p-[7px] border border-[var(--text)] rounded-full hover:bg-[var(--hover)] gap-2 ${
-        isThinking ? "bg-[var(--hover)]" : ""
-      } ${isThinking ? "text-[var(--primary)]" : ""}`}
+      className={`ff p-[7px] border border-[var(--text)] rounded-full gap-2
+        ${isThinking 
+          ? "bg-[var(--hover)] hover:bg-[var(--double-hover)] text-[var(--primary)]" 
+          : "hover:bg-[var(--hover)]"
+        }`}
     >
       <div className="text-[var(--primary)]">
         <svg

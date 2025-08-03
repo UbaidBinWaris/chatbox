@@ -13,9 +13,19 @@ export default function ChatInput() {
   const [showResponse, setShowResponse] = useState(true);
   const [search , setSearch] = useState("false");
 
+  const [think, setThink] = useState(false);
+
   const handleAttach = () => {
     console.log("Attach button clicked");
   };
+
+
+   const handleThinkChange = (currentValue) => {
+    setThink(currentValue); // new state coming from child
+    console.log("New value from Think:", currentValue);
+  };
+
+  
   return (
     <section
       className={`fixed bottom-[4vh] left-0 w-full flex justify-center z-10  ${
@@ -39,7 +49,7 @@ export default function ChatInput() {
               onToggle={() => console.log("DeepSearch toggled")}
               onDropdown={() => console.log("Dropdown clicked")}
             />
-            <Think onClick={() => console.log("Think button clicked")} />
+           <Think ThinkClick={handleThinkChange} />
           </div>
           <div className="ff gap-2">
             <AiSelector
