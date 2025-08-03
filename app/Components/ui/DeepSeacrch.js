@@ -3,21 +3,11 @@ import React from "react";
 
 export default function DeepSearch({ onToggle, onDropdown }) {
   return (
-    <div className="flex items-center">
-      {/* Left Toggle Button */}
-      <button
-        type="button"
-        aria-label="DeepSearch"
-        aria-pressed="false"
-        data-state="closed"
-        tabIndex={0}
-        onClick={onToggle}
-        className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 disabled:opacity-60 disabled:cursor-not-allowed 
-        [&_svg]:shrink-0 select-none h-10 px-3.5 py-1.5 text-sm rounded-full group/ds-toggle transition-colors 
-        duration-100 focus-visible:ring-transparent box-border relative overflow-hidden rounded-r-none pr-3 
-        bg-[var(--dark-grey)] dark:bg-[var(--light)] dark:hover:bg-[var(--selected-light-grey)] hover:bg-[var(--light-grey)]"
-      >
-        <svg
+    <button
+    className="group/ds-toggle flex items-center justify-center text-[var(--light)] dark:text-[var(--light-grey)] dark:group-hover/ds-toggle:text-[var(--light)] p-2 rounded-full hover:bg-[var(--hover)] transition-colors duration-100 gap-2"
+    >
+
+      <svg
           width="18"
           height="18"
           viewBox="0 0 24 24"
@@ -37,46 +27,9 @@ export default function DeepSearch({ onToggle, onDropdown }) {
             className="transition-transform duration-200 ease-out origin-center rotate-0"
           />
         </svg>
-        <span className="hidden sm:block text-[var(--light)] dark:text-[var(--dark-gray)]
 
-">DeepSearch</span>
-      </button>
+      <span>DeepSearch</span>
 
-      {/* Divider */}
-      <div
-        className="h-full py-1 w-[1px] bg-[var(--light-grey)] dark:bg-[var(--selected-light-grey)] focus:outline-none"
-        tabIndex={-1}
-      ></div>
-
-      {/* Right Dropdown Button */}
-      <button
-        type="button"
-        aria-label="Change mode"
-        aria-haspopup="menu"
-        aria-expanded="false"
-        data-state="closed"
-        id="radix-r60"
-        onClick={onDropdown}
-        className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 
-        disabled:opacity-60 disabled:cursor-not-allowed [&_svg]:shrink-0 select-none h-10 px-3.5 py-1.5 text-sm 
-        rounded-full transition-colors duration-100 relative overflow-hidden focus-visible:ring-transparent 
-        rounded-l-none pl-2 pr-3 bg-[var(--dark-grey)] dark:bg-[var(--light)] dark:hover:bg-[var(--selected-light-grey)] hover:bg-[var(--light-grey)]"
-      >
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="stroke-[2] text-[var(--light)] dark:text-[var(--light-grey)] dark:hover:text-[var(--light)] transition-colors duration-100"
-        >
-          <path
-            d="M6 9L12 15L18 9"
-            stroke="currentColor"
-            strokeLinecap="square"
-          />
-        </svg>
-      </button>
-    </div>
+    </button>
   );
 }
