@@ -1,5 +1,6 @@
-// "use client";
-import { useState } from "react";
+
+"use client";
+import { useState, useRef, useEffect } from "react";
 import { messageText } from "../data/Message";
 import SoundVisualizerButton from "./ui/SoundVisualizerButton";
 import AiSelector from "./ui/AiSelector";
@@ -8,60 +9,84 @@ import DeepSearch from "./ui/DeepSeacrch";
 import AttachButton from "./ui/Attachment";
 
 export default function ChatInput() {
-  const [input, setInput] = useState("");
   const [userMessage, setUserMessage] = useState("");
   const [showResponse, setShowResponse] = useState(true);
-  const [search, setSearch] = useState("false");
+  const [search, setSearch] = useState(false);
 
   const [think, setThink] = useState(false);
   const [deepsearch, setDeepSearch] = useState(false);
   const [deepersearch, setDeeperSearch] = useState(false);
   const [attachedFiles, setAttachedFiles] = useState([]);
 
+  const [input, setInput] = useState("");
+  const textareaRef = useRef(null);
+
+  // Handle attachment click
   const handleAttach = () => {
     console.log("Attach button clicked");
   };
 
   const handleThinkChange = (currentValue) => {
-    setThink(currentValue); // new state coming from child
+    setThink(currentValue);
     console.log("New value from Think:", currentValue);
   };
-    const handleSelectionChange = (selected) => {
+
+  const handleSelectionChange = (selected) => {
     console.log("Selection changed to:", selected);
   };
 
-const handleFileSelect = (newFiles) => {
-  setAttachedFiles((prev) => [...prev, ...newFiles]);
-  console.log("Attached files:", [...attachedFiles, ...newFiles]);
-};
+  const handleFileSelect = (newFiles) => {
+    setAttachedFiles((prev) => [...prev, ...newFiles]);
+    console.log("Attached files:", [...attachedFiles, ...newFiles]);
+  };
 
+  // Auto-expand textarea height
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
+    }
+  }, [input]);
+
+  // Handle Enter and Shift+Enter
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      console.log("Sending message:", input);
+      setInput("");
+    }
+  };
 
   return (
     <section
-      className={`fixed bottom-10 md:bottom-20 left-0 w-full flex justify-center z-10  ${
+      className={`fixed bottom-10 md:bottom-20 left-0 w-full flex justify-center z-10 ${
         showResponse ? "items-end" : "items-center"
-      } `}
+      }`}
     >
-      <div className="ff flex-col  min-h-20 w-5xl mx-3 p-5 bg-[var(--chatinput)] rounded-3xl">
-        <div className="ff">
-          <input
-            type="text"
-            className="p-2 w-full"
+      <div className="ff flex-col min-h-20 w-5xl mx-3 p-5 bg-[var(--chatinput)] rounded-3xl">
+        {/* Textarea Input */}
+        <div className="ff w-full">
+          <textarea
+            ref={textareaRef}
+            className="w-full p-3 transition duration-200 placeholder-[var(--text-secondary)] text-[var(--primary)] border border-transparent focus:outline-none focus:ring-0 focus:border-transparent resize-none overflow-hidden bg-transparent"
             placeholder="Type your message here..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            rows={1}
           />
         </div>
+
+        {/* Buttons Section */}
         <div className="ff justify-between mt-2 w-full">
           <div className="ff gap-2">
             <AttachButton onFileSelect={handleFileSelect} />
-
             <DeepSearch
               deepsearchActive={deepsearch}
               deepersearchActive={deepersearch}
               setDeepSearchActive={setDeepSearch}
               setDeeperSearchActive={setDeeperSearch}
-              onSelectionChange={handleSelectionChange} 
+              onSelectionChange={handleSelectionChange}
             />
             <Think ThinkClick={handleThinkChange} />
           </div>
@@ -69,7 +94,7 @@ const handleFileSelect = (newFiles) => {
             <AiSelector
               label="Grok 3"
               onClick={() => {
-                // Handle AI selection logic here
+                // AI selection logic
               }}
             />
             <SoundVisualizerButton
