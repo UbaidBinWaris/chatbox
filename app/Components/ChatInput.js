@@ -9,7 +9,7 @@ import DeepSearch from "./ui/DeepSeacrch";
 import AttachButton from "./ui/Attachment";
 
 export default function ChatInput() {
-  const [userMessage, setUserMessage] = useState("");
+  // const [userMessage, setUserMessage] = useState("");
   const [showResponse, setShowResponse] = useState(true);
   const [search, setSearch] = useState(false);
 
