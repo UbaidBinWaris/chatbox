@@ -1,14 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 export default function DeepSearch({
   deepsearchActive,
   deepersearchActive,
   setDeepSearchActive,
   setDeeperSearchActive,
-  onSelectionChange, // ✅ Add this
+  onSelectionChange,
 }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const containerRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
@@ -33,8 +36,35 @@ export default function DeepSearch({
   const isActive = deepsearchActive || deepersearchActive;
   const activeLabel = deepersearchActive ? "DeeperSearch" : "DeepSearch";
 
+  // ⏱️ Auto-close after 5s if not hovered
+  const startHideTimer = () => {
+    timeoutRef.current = setTimeout(() => {
+      setDropdownOpen(false);
+    }, 5000);
+  };
+
+  const cancelHideTimer = () => {
+    clearTimeout(timeoutRef.current);
+  };
+
+  // 🔒 Close if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div
+      ref={containerRef}
       className={`ff relative border border-[var(--text)] rounded-full transition-colors ${
         isActive ? "bg-[var(--hover)]" : ""
       }`}
@@ -109,14 +139,16 @@ export default function DeepSearch({
         {/* Dropdown Menu */}
         {dropdownOpen && (
           <ul
-            className={`absolute z-10 w-64 rounded-2xl shadow bg-[var(--hover)] text-[var(--primary)] overflow-hidden
-  left-0 top-auto bottom-full mb-2
-  transition-all duration-200 ease-in-out
-`}
+            ref={dropdownRef}
+            onMouseEnter={cancelHideTimer}
+            onMouseLeave={startHideTimer}
+            className="absolute z-10 w-64 rounded-2xl shadow bg-[var(--hover)] text-[var(--primary)] overflow-hidden
+              left-0 top-auto bottom-full mb-2 transition-all duration-200 ease-in-out"
           >
+            {/* DeepSearch */}
             <li
               onClick={() => handleSelect("deep")}
-              className="cursor-pointer px-4 py-2 hover:bg-[var(--double-hover)] flex items-center gap-2 "
+              className="cursor-pointer px-4 py-2 hover:bg-[var(--double-hover)] flex items-center gap-2"
             >
               <div className="flex items-center justify-center w-6 h-6">
                 {deepsearchActive && (
@@ -139,9 +171,11 @@ export default function DeepSearch({
                 </span>
               </div>
             </li>
+
+            {/* DeeperSearch */}
             <li
               onClick={() => handleSelect("deeper")}
-              className="cursor-pointer p-2 hover:bg-[var(--double-hover)]  ff  gap-2 "
+              className="cursor-pointer p-2 hover:bg-[var(--double-hover)] ff gap-2"
             >
               <div className="flex items-center justify-center w-6 h-6">
                 {deepersearchActive && (

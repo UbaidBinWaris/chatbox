@@ -1,32 +1,60 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 const AttachButton = ({ onFileSelect, disabled }) => {
   const [open, setOpen] = useState(false);
   const imageInputRef = useRef(null);
   const documentInputRef = useRef(null);
+  const dropdownRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const containerRef = useRef(null);
 
   const handleToggle = () => {
     setOpen((prev) => !prev);
   };
 
-const handleFileUpload = (e, type) => {
-  const files = Array.from(e.target.files);
-  if (files.length === 0) return;
+  const handleFileUpload = (e, type) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
 
-  const typedFiles = files.map((file) => ({ file, type }));
+    const typedFiles = files.map((file) => ({ file, type }));
 
-  if (onFileSelect) {
-    onFileSelect(typedFiles); // Send array of objects
-  }
+    if (onFileSelect) {
+      onFileSelect(typedFiles);
+    }
 
-  console.log("Uploaded files:", typedFiles);
-  setOpen(false);
-};
+    console.log("Uploaded files:", typedFiles);
+    setOpen(false);
+  };
 
+  // 🔒 Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // ⏱️ Auto-hide dropdown after 5s if not hovered
+  const startHideTimer = () => {
+    timeoutRef.current = setTimeout(() => {
+      setOpen(false);
+    }, 5000);
+  };
+
+  const cancelHideTimer = () => {
+    clearTimeout(timeoutRef.current);
+  };
 
   return (
-    <div className="relative inline-block">
+    <div ref={containerRef} className="relative inline-block">
       {/* Trigger Button */}
       <button
         type="button"
@@ -55,6 +83,9 @@ const handleFileUpload = (e, type) => {
       {/* Dropdown Menu */}
       {open && (
         <ul
+          ref={dropdownRef}
+          onMouseEnter={cancelHideTimer}
+          onMouseLeave={startHideTimer}
           className="absolute z-10 w-64 rounded-2xl shadow bg-[var(--hover)] text-[var(--primary)] overflow-hidden
             left-0 bottom-full mb-2 transition-all duration-200 ease-in-out"
         >
@@ -89,24 +120,22 @@ const handleFileUpload = (e, type) => {
       )}
 
       {/* Hidden File Inputs */}
-     <input
-  ref={imageInputRef}
-  type="file"
-  accept="image/*"
-  multiple
-  className="hidden"
-  onChange={(e) => handleFileUpload(e, "image")}
-/>
-
-<input
-  ref={documentInputRef}
-  type="file"
-  accept=".pdf,.doc,.docx,.txt"
-  multiple
-  className="hidden"
-  onChange={(e) => handleFileUpload(e, "document")}
-/>
-
+      <input
+        ref={imageInputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        className="hidden"
+        onChange={(e) => handleFileUpload(e, "image")}
+      />
+      <input
+        ref={documentInputRef}
+        type="file"
+        accept=".pdf,.doc,.docx,.txt"
+        multiple
+        className="hidden"
+        onChange={(e) => handleFileUpload(e, "document")}
+      />
     </div>
   );
 };
