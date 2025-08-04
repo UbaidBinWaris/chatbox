@@ -1,49 +1,39 @@
-// components/ChatDisplay.jsx
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { chatHistory as initialHistory } from "../data/p";
 
-export default function chat({ newMessage }) {
-  const [messages, setMessages] = useState(initialHistory);
+// Optional: starter message pool
+const randomStarters = [
+  "Hello! How can I help you today?",
+  "What's on your mind?",
+  "Ask me anything — I'm listening.",
+  "Hey there! Ready to explore something?",
+];
 
+export default function Chat({ chatMessages = [] }) {
+  const [messages, setMessages] = useState([]);
+
+  // Load a random welcome message once on mount
   useEffect(() => {
-    if (newMessage) {
-      setMessages((prev) => [...prev, newMessage]);
-    }
-  }, [newMessage]);
+    const random = randomStarters[Math.floor(Math.random() * randomStarters.length)];
+    setMessages([{ role: "assistant", message: random }, ...chatMessages]);
+  }, [chatMessages]);
 
   return (
-    <div className="p-4 max-h-[60vh] overflow-y-auto space-y-2">
+    <div className="w-full max-w-4xl mx-auto px-4 mt-6 space-y-4 overflow-y-auto">
       {messages.map((msg, idx) => (
         <div
           key={idx}
-          className={`p-3 rounded-xl ${
-            msg.role === "user" ? "bg-blue-100 text-right" : "bg-gray-100"
-          }`}
+          className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
         >
-          <div>{msg.message}</div>
-          {(msg.isThinking || msg.deepSeek || msg.deeperSeek) && (
-            <div className="text-sm text-gray-500 mt-1">
-              {msg.isThinking && "🤔 Thinking"}
-              {msg.deepSeek && " 🔍 DeepSeek"}
-              {msg.deeperSeek && " 🔬 DeeperSeek"}
-            </div>
-          )}
-          {msg.images?.length > 0 && (
-            <div className="mt-2">
-              {msg.images.map((img, i) => (
-                <Image key={i} src={img} alt={`Chat image ${i + 1}`} width={400} height={300} className="max-w-xs" />
-              ))}
-            </div>
-          )}
-          {msg.documents?.length > 0 && (
-            <div className="mt-2 text-sm text-blue-600 underline">
-              {msg.documents.map((doc, i) => (
-                <div key={i}>{doc}</div>
-              ))}
-            </div>
-          )}
+          <div
+            className={`max-w-[80%] px-4 py-2 rounded-2xl shadow-md whitespace-pre-wrap break-words ${
+              msg.role === "user"
+                ? "bg-[var(--user-bubble)] text-[var(--primary)]"
+                : "bg-[var(--assistant-bubble)] text-[var(--primary)]"
+            }`}
+          >
+            {msg.message}
+          </div>
         </div>
       ))}
     </div>
