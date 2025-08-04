@@ -68,7 +68,8 @@ export default function ChatInput() {
         <div className="ff w-full">
           <textarea
             ref={textareaRef}
-            className="w-full p-3 transition duration-200 placeholder-[var(--text-secondary)] text-[var(--primary)] border border-transparent focus:outline-none focus:ring-0 focus:border-transparent resize-none overflow-hidden bg-transparent"
+            className="w-full p-3 transition duration-200 placeholder-[var(--text-secondary)] text-[var(--primary)] focus:outline-none focus:ring-0 max-h-80 resize-none overflow-y-auto overflow-x-hidden bg-transparent whitespace-pre-wrap break-words"
+
             placeholder="Type your message here..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
