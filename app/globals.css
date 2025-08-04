@@ -17,7 +17,8 @@
   --primary: #161618;
   --secondary: #ffffff;
   --text: #3a3c3d;
-  --hover: #b9c3c4;
+  --text-secondary: #5c6d6e;
+  --hover: #8ca2a5;
   --double-hover: #a2b4b6;
   --body:#f9f8f6;
   --chatinput:#cbcfd3;
@@ -30,6 +31,7 @@
   --primary : #e0dddd;
   --secondary: #161618; 
   --text: #535353;
+  --text-secondary: #949191;
   --chatinput: #242628;
 
   --hover: #3a3c3d;

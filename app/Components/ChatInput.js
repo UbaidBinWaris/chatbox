@@ -11,28 +11,38 @@ export default function ChatInput() {
   const [input, setInput] = useState("");
   const [userMessage, setUserMessage] = useState("");
   const [showResponse, setShowResponse] = useState(true);
-  const [search , setSearch] = useState("false");
+  const [search, setSearch] = useState("false");
 
   const [think, setThink] = useState(false);
+  const [deepsearch, setDeepSearch] = useState(false);
+  const [deepersearch, setDeeperSearch] = useState(false);
+  const [attachedFiles, setAttachedFiles] = useState([]);
 
   const handleAttach = () => {
     console.log("Attach button clicked");
   };
 
-
-   const handleThinkChange = (currentValue) => {
+  const handleThinkChange = (currentValue) => {
     setThink(currentValue); // new state coming from child
     console.log("New value from Think:", currentValue);
   };
+    const handleSelectionChange = (selected) => {
+    console.log("Selection changed to:", selected);
+  };
 
-  
+const handleFileSelect = (newFiles) => {
+  setAttachedFiles((prev) => [...prev, ...newFiles]);
+  console.log("Attached files:", [...attachedFiles, ...newFiles]);
+};
+
+
   return (
     <section
-      className={`fixed bottom-[4vh] left-0 w-full flex justify-center z-10  ${
+      className={`fixed bottom-10 md:bottom-20 left-0 w-full flex justify-center z-10  ${
         showResponse ? "items-end" : "items-center"
       } `}
     >
-      <div className="ff flex-col  min-h-20 w-5xl p-5 bg-[var(--chatinput)] rounded-3xl">
+      <div className="ff flex-col  min-h-20 w-5xl mx-3 p-5 bg-[var(--chatinput)] rounded-3xl">
         <div className="ff">
           <input
             type="text"
@@ -44,12 +54,16 @@ export default function ChatInput() {
         </div>
         <div className="ff justify-between mt-2 w-full">
           <div className="ff gap-2">
-            <AttachButton onClick={handleAttach} />
+            <AttachButton onFileSelect={handleFileSelect} />
+
             <DeepSearch
-              onToggle={() => console.log("DeepSearch toggled")}
-              onDropdown={() => console.log("Dropdown clicked")}
+              deepsearchActive={deepsearch}
+              deepersearchActive={deepersearch}
+              setDeepSearchActive={setDeepSearch}
+              setDeeperSearchActive={setDeeperSearch}
+              onSelectionChange={handleSelectionChange} 
             />
-           <Think ThinkClick={handleThinkChange} />
+            <Think ThinkClick={handleThinkChange} />
           </div>
           <div className="ff gap-2">
             <AiSelector
@@ -58,10 +72,12 @@ export default function ChatInput() {
                 // Handle AI selection logic here
               }}
             />
-            <SoundVisualizerButton onClick={() => {
-              setSearch(prev => !prev);
-              console.log(`Sound Visualizer Button Clicked ${search}`);
-            }} />
+            <SoundVisualizerButton
+              onClick={() => {
+                setSearch((prev) => !prev);
+                console.log(`Sound Visualizer Button Clicked ${search}`);
+              }}
+            />
           </div>
         </div>
       </div>
