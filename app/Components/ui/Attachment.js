@@ -23,7 +23,7 @@ const AttachButton = ({ onFileSelect, disabled }) => {
       onFileSelect(typedFiles);
     }
 
-    console.log("Uploaded files:", typedFiles);
+    // console.log("Uploaded files:", typedFiles);
     setOpen(false);
   };
 

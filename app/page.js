@@ -3,6 +3,7 @@ import ChatInput from "./Components/ChatInput";
 import Sidebar from "./Components/Sidebar";
 import ThemeButton from "./Components/ThemeTogel";
 import Header from "./Components/Header";
+import chat from "./Components/chat";
 
 export default function Home() {
   return (
@@ -17,6 +18,8 @@ export default function Home() {
           This changes with the theme!
         </div>
       </div>
+
+
 
       <ChatInput />
     </main>

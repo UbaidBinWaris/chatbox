@@ -1,4 +1,3 @@
-
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { messageText } from "../data/Message";
@@ -7,6 +6,8 @@ import AiSelector from "./ui/AiSelector";
 import Think from "./ui/Think";
 import DeepSearch from "./ui/DeepSeacrch";
 import AttachButton from "./ui/Attachment";
+
+import { sendToBackend } from "@/lib/mockBackend";
 
 export default function ChatInput() {
   // const [userMessage, setUserMessage] = useState("");
@@ -21,6 +22,45 @@ export default function ChatInput() {
   const [input, setInput] = useState("");
   const textareaRef = useRef(null);
 
+  const [chatMessages, setChatMessages] = useState([]);
+ const handleSend = async () => {
+  if (!input.trim()) return;
+
+  const userMsg = {
+    role: "user",
+    message: input,
+    isThinking: think,
+    deepSeek: deepsearch,
+    deeperSeek: deepersearch,
+    images: attachedFiles
+      .filter((f) => f.type === "image")
+      .map((f) => f.file.name),
+    documents: attachedFiles
+      .filter((f) => f.type === "document")
+      .map((f) => f.file.name),
+  };
+
+  setChatMessages((prev) => [...prev, userMsg]);
+  setInput("");
+
+  const botResponse = await sendToBackend(input, {
+    isThinking: think,
+    deepSeek: deepsearch,
+    deeperSeek: deepersearch,
+    images: userMsg.images,
+    documents: userMsg.documents,
+  });
+
+  setChatMessages((prev) => [...prev, botResponse]);
+
+  // ✅ Reset values after send
+  setThink(false);
+  setDeepSearch(false);
+  setDeeperSearch(false);
+  setAttachedFiles([]);
+};
+
+
   // Handle attachment click
   const handleAttach = () => {
     console.log("Attach button clicked");
@@ -28,7 +68,7 @@ export default function ChatInput() {
 
   const handleThinkChange = (currentValue) => {
     setThink(currentValue);
-    console.log("New value from Think:", currentValue);
+    // console.log("New value from Think:", currentValue);
   };
 
   const handleSelectionChange = (selected) => {
@@ -37,14 +77,15 @@ export default function ChatInput() {
 
   const handleFileSelect = (newFiles) => {
     setAttachedFiles((prev) => [...prev, ...newFiles]);
-    console.log("Attached files:", [...attachedFiles, ...newFiles]);
+    // console.log("Attached files:", [...attachedFiles, ...newFiles]);
   };
 
   // Auto-expand textarea height
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + "px";
     }
   }, [input]);
 
@@ -52,8 +93,8 @@ export default function ChatInput() {
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      console.log("Sending message:", input);
-      setInput("");
+      handleSend();
+      // console.log("Message sent:", input);
     }
   };
 
@@ -69,7 +110,6 @@ export default function ChatInput() {
           <textarea
             ref={textareaRef}
             className="w-full p-3 transition duration-200 placeholder-[var(--text-secondary)] text-[var(--primary)] focus:outline-none focus:ring-0 max-h-80 resize-none overflow-y-auto overflow-x-hidden bg-transparent whitespace-pre-wrap break-words"
-
             placeholder="Type your message here..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -89,7 +129,7 @@ export default function ChatInput() {
               setDeeperSearchActive={setDeeperSearch}
               onSelectionChange={handleSelectionChange}
             />
-            <Think ThinkClick={handleThinkChange} />
+            <Think isThinking={think} ThinkClick={handleThinkChange} />
           </div>
           <div className="ff gap-2">
             <AiSelector

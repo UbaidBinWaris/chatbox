@@ -1,13 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
-export default function Think({ size = 18, ThinkClick }) {
-  const [isThinking, setIsThinking] = useState(false);
-
+export default function Think({ size = 18, isThinking = false, ThinkClick }) {
   const handleClick = () => {
     const newState = !isThinking;
-    setIsThinking(newState);
-    if (ThinkClick) ThinkClick(newState); // Send the new state to parent
+    if (ThinkClick) ThinkClick(newState);
   };
 
   return (
