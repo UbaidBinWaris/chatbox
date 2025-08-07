@@ -3,11 +3,11 @@ import ChatInput from "./Components/ChatInput";
 import Sidebar from "./Components/Sidebar";
 import ThemeButton from "./Components/ThemeTogel";
 import Header from "./Components/Header";
-import chat from "./Components/chat";
+
 import { useState } from "react";
 
 export default function Home() {
-  const [chatMessages, setChatMessages] = useState([]);
+  
 
   
 
@@ -24,7 +24,7 @@ export default function Home() {
         </div>
       </div>
 
-      <chat chatMessages={chatMessages} />
+
       <ChatInput />
     </main>
   );
